@@ -20,7 +20,7 @@ embeddings = download_hugging_face_embeddings()
 
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
-index_name = "TakeoffPK"
+index_name = "takeoff-pk"
 
 # Create index only if it doesn't already exist
 existing_indexes = [i.name for i in pc.list_indexes()]

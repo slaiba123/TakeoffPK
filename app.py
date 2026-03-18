@@ -23,7 +23,7 @@ os.environ["HUGGINGFACEHUB_API_TOKEN"] = HUGGINGFACE_API_KEY
 
 embeddings = download_hugging_face_embeddings()
 
-index_name = "medicalbot"
+index_name = "takeoff-pk"
 
 # Load existing Pinecone index
 docsearch = PineconeVectorStore.from_existing_index(
