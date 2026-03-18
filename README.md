@@ -131,7 +131,7 @@ Save `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 ### Step 2 — Create ECR repository
 ```
 AWS Console → ECR → Create Repository → name: visayaar
-Save URI: <account_id>.dkr.ecr.us-east-1.amazonaws.com/visayaar
+Save URI: <account_id>.dkr.ecr.us-east-1.amazonaws.com/TakeoffPK
 ```
 
 ### Step 3 — Launch EC2 instance
