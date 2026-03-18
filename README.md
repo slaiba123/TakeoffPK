@@ -37,7 +37,7 @@ visabot/
 │   ├── germany/         ← 4 PDFs
 │   ├── australia/       ← 3 PDFs
 │   ├── turkey/          ← 3 PDFs
-│   └── saudi_arabia/    ← 2 PDFs
+│  
 ├── templates/
 │   └── chat.html
 ├── app.py
@@ -64,7 +64,6 @@ visabot/
 | 🇩🇪 Germany | germany.info, daad.de |
 | 🇦🇺 Australia | immi.homeaffairs.gov.au |
 | 🇹🇷 Turkey | islamabad-emb.mfa.gov.tr |
-| 🇸🇦 Saudi Arabia | embassies.mofa.gov.sa |
 
 ---
 
@@ -78,8 +77,8 @@ cd visabot
 
 ### Step 2 — Create conda environment
 ```bash
-conda create -n HakeemAI python=3.10 -y
-conda activate HakeemAI
+conda create -n TakeoffPK python=3.10 -y
+conda activate TakeoffPK
 ```
 
 ### Step 3 — Install requirements
