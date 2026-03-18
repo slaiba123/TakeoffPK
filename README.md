@@ -11,7 +11,6 @@ An AI-powered study abroad assistant helping Pakistani students navigate visa re
 | 4 | 🇩🇪 Germany | Student Visa, EU Blue Card, PhD Visa |
 | 5 | 🇦🇺 Australia | Student Visa Subclass 500 |
 | 6 | 🇹🇷 Turkey | Student Visa, Türkiye Scholarships |
-| 7 | 🇸🇦 Saudi Arabia | Student/Visit Visa |
 
 ---
 
