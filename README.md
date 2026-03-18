@@ -130,7 +130,7 @@ Save `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
 ### Step 2 — Create ECR repository
 ```
-AWS Console → ECR → Create Repository → name: visayaar
+AWS Console → ECR → Create Repository → name: TakeoffPK
 Save URI: <account_id>.dkr.ecr.us-east-1.amazonaws.com/TakeoffPK
 ```
 
@@ -161,7 +161,7 @@ AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_REGION                 = us-east-1
 AWS_ECR_LOGIN_URI          = <account_id>.dkr.ecr.us-east-1.amazonaws.com
-ECR_REPOSITORY_NAME        = visayaar
+ECR_REPOSITORY_NAME        = TakeoffPK
 PINECONE_API_KEY
 GROQ_API_KEY
 HUGGINGFACE_API_KEY
