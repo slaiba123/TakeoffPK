@@ -1,4 +1,4 @@
-name: Deploy VisaYaar to AWS
+name: Deploy TakeoffPK to AWS
 
 on:
   push:
