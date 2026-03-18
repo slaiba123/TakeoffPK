@@ -1,6 +1,6 @@
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 import os
 
 
@@ -22,8 +22,8 @@ def text_split(extracted_data):
 
 # Get HuggingFace Inference API Embeddings (no local model download, saves ~800MB RAM)
 def download_hugging_face_embeddings():
-    embeddings = HuggingFaceInferenceAPIEmbeddings(
-        api_key=os.environ.get('HUGGINGFACE_API_KEY'),
-        model_name="sentence-transformers/all-MiniLM-L6-v2"  # returns 384 dimensions
+    embeddings = HuggingFaceEndpointEmbeddings(
+        model="sentence-transformers/all-MiniLM-L6-v2",  # returns 384 dimensions
+        huggingfacehub_api_token=os.environ.get('HUGGINGFACE_API_KEY')
     )
     return embeddings

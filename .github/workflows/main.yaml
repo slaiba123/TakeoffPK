@@ -1,4 +1,4 @@
-name: Deploy Medical Chatbot to AWS
+name: Deploy visa guide chatbot to AWS
 
 on:
   push:

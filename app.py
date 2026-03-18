@@ -2,8 +2,8 @@ from flask import Flask, render_template, jsonify, request
 from src.helper import download_hugging_face_embeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_groq import ChatGroq
-from langchain.chains import create_retrieval_chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_classic.chains import create_retrieval_chain
+from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 from src.prompt import *
@@ -19,6 +19,7 @@ HUGGINGFACE_API_KEY = os.environ.get('HUGGINGFACE_API_KEY')
 
 os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
 os.environ["HUGGINGFACE_API_KEY"] = HUGGINGFACE_API_KEY
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = HUGGINGFACE_API_KEY
 
 embeddings = download_hugging_face_embeddings()
 
@@ -34,7 +35,7 @@ retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k":
 
 # Use Groq (free) instead of OpenAI (paid)
 llm = ChatGroq(
-    model="llama3-8b-8192",
+    model="llama-3.3-70b-versatile",
     temperature=0.4,
     max_tokens=500,
     groq_api_key=GROQ_API_KEY

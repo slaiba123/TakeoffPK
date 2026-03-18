@@ -2,9 +2,10 @@ langchain
 langchain-community
 langchain-pinecone
 langchain-groq
-langchain_openai
 langchain_experimental
 langchain-core
+langchain-huggingface
+langchain-classic
 flask
 pypdf
 python-dotenv

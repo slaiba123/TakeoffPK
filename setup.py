@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='MedicalChatbot',
+    name='TakeoffPK',
     version='0.0.0',
     author='Laiba Mushtaq',
     author_email='laiba244m@gmail.com',
