@@ -28,7 +28,6 @@ This project uses RAG architecture to ground AI responses in official government
 ---
 
 ## Architecture
-## 🏗️ Architecture
 ```mermaid
 %%{init: {'theme': 'dark', 'flowchart': {'defaultRenderer': 'elk', 'curve': 'basis'}}}%%
 flowchart LR
