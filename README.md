@@ -1,63 +1,282 @@
-# TakeoffPK — AI Student Visa Guide for Pakistanis
+# TakeoffPK 🛫 — AI-Powered Student Visa Guide for Pakistanis
 
-An AI-powered study abroad assistant helping Pakistani students navigate visa requirements for undergraduate, postgraduate and PhD programs across 7 top countries.
+> Helping Pakistani students navigate the complex world of international student visas using Retrieval-Augmented Generation (RAG) and Large Language Models.
+
+**Live Demo:** http://13.235.238.227:8080
+
+---
+
+## 📌 Overview
+
+TakeoffPK is an end-to-end AI chatbot built to solve a real problem — thousands of Pakistani students every year struggle to find accurate, up-to-date visa information for studying abroad. Most rely on outdated blogs or expensive consultants.
+
+This project uses RAG architecture to ground AI responses in official government documents, achieving **96-100% accuracy** on a custom 29-question evaluation suite across 7 countries.
+
+---
 
 ## 🌍 Countries Covered
-| # | Country | Visa Types |
-|---|---------|-----------|
-| 1 | 🇺🇸 USA | F-1 Student Visa (UG, Masters, PhD) |
-| 2 | 🇬🇧 UK | Student Visa (UG, PG, PhD) |
-| 3 | 🇨🇦 Canada | Study Permit (UG, Masters, PhD) |
-| 4 | 🇩🇪 Germany | Student Visa, EU Blue Card, PhD Visa |
-| 5 | 🇦🇺 Australia | Student Visa Subclass 500 |
-| 6 | 🇹🇷 Turkey | Student Visa, Türkiye Scholarships |
+
+| Country | Visa Types Covered |
+|---------|-------------------|
+| 🇺🇸 USA | F-1 Student Visa (UG, Masters, PhD) |
+| 🇬🇧 UK | Student Visa — CAS, Tier 4 (UG, PG, PhD) |
+| 🇨🇦 Canada | Study Permit — PAL, SDS updates (UG, Masters, PhD) |
+| 🇩🇪 Germany | Student Visa, PhD Visa, EU Blue Card, DAAD |
+| 🇦🇺 Australia | Student Visa Subclass 500 (UG, PG, PhD) |
+| 🇹🇷 Turkey | Student Visa, Türkiye Burslari Scholarship |
+
+---
+
+## 🏗️ Architecture
+
+```
+User Query
+    │
+    ▼
+Flask Web App (Python)
+    │
+    ▼
+LangChain RAG Pipeline
+    ├── HuggingFace Inference API  ← Query Embedding (free, no local model)
+    ├── Pinecone Vector DB         ← Semantic Search over 21 official PDFs
+    └── Groq LLM (llama-3.3-70b)  ← Answer Generation (free)
+    │
+    ▼
+Grounded Response with Disclaimer
+```
 
 ---
 
 ## 🛠️ Tech Stack
-- **LLM**: Groq (free) — llama-3.3-70b-versatile
-- **Embeddings**: HuggingFace Inference API (free)
-- **Vector DB**: Pinecone (free starter)
-- **Backend**: Flask
-- **Deployment**: AWS EC2 t2.micro (free tier) + ECR + GitHub Actions CI/CD
+
+| Layer | Technology |
+|-------|-----------|
+| **LLM** | Groq — llama-3.3-70b-versatile (free tier) |
+| **Embeddings** | HuggingFace Inference API — all-MiniLM-L6-v2 (free) |
+| **Vector Database** | Pinecone Serverless (free starter) |
+| **Backend** | Python, Flask |
+| **Frontend** | HTML, CSS, JavaScript |
+| **Containerization** | Docker |
+| **Registry** | AWS ECR |
+| **Deployment** | AWS EC2 t3.micro (free tier) |
+| **CI/CD** | GitHub Actions — lint, test, build, deploy |
+| **Testing** | pytest (15 unit tests), custom batch evaluation (29 questions) |
+| **Linting** | flake8 |
+
+---
+
+## 📊 Evaluation Results
+
+A custom batch test was built to evaluate accuracy across all countries:
+
+| Country | Questions | Passed | Accuracy |
+|---------|-----------|--------|----------|
+| 🇬🇧 UK | 5 | 5 | 100% |
+| 🇨🇦 Canada | 5 | 5 | 100% |
+| 🇩🇪 Germany | 4 | 4 | 100% |
+| 🇦🇺 Australia | 4 | 4 | 100% |
+| 🇺🇸 USA | 5 | 5 | 100% |
+| 🇹🇷 Turkey | 2 | 2 | 100% |
+| Cross-Country | 2 | 2 | 100% |
+| **Total** | **29** | **29** | **100%** |
 
 ---
 
 ## 📁 Project Structure
+
 ```
-visabot/
+TakeoffPK/
 ├── src/
 │   ├── __init__.py
-│   ├── helper.py
-│   └── prompt.py
-├── Data/
-│   ├── usa/             ← 4 PDFs
-│   ├── uk/              ← 3 PDFs
-│   ├── canada/          ← 2 PDFs
-│   ├── germany/         ← 4 PDFs
-│   ├── australia/       ← 3 PDFs
-│   ├── turkey/          ← 3 PDFs
-│  
+│   ├── helper.py          ← PDF loading, text splitting, embeddings
+│   └── prompt.py          ← System prompt for the LLM
+├── Data/                  ← Official PDFs (not committed to GitHub)
+│   ├── usa/               ← 4 PDFs (US Embassy, State Dept)
+│   ├── uk/                ← 4 PDFs (UKVI official)
+│   ├── canada/            ← 3 PDFs (IRCC official)
+│   ├── germany/           ← 4 PDFs (German Embassy, DAAD)
+│   ├── australia/         ← 3 PDFs (HomeAffairs official)
+│   └── turkey/            ← 3 PDFs (Turkish Embassy Pakistan)
 ├── templates/
-│   └── chat.html
-├── app.py
-├── store_index.py
-├── requirements.txt
-├── setup.py
+│   └── chat.html          ← Frontend UI
+├── tests/
+│   └── test_app.py        ← 15 unit tests (pytest)
+├── app.py                 ← Flask application
+├── store_index.py         ← PDF ingestion pipeline
+├── batch_test.py          ← 29-question accuracy evaluation
+├── requirements.txt       ← Development dependencies
+├── requirements-prod.txt  ← Production dependencies (slim)
 ├── Dockerfile
+├── .dockerignore
 ├── .env.example
 ├── .gitignore
 └── .github/
     └── workflows/
-        └── main.yaml
+        └── main.yaml      ← CI/CD pipeline
+```
+
+---
+
+## 🔄 CI/CD Pipeline
+
+Every push to `main` automatically triggers:
+
+```
+Push to GitHub
+      │
+      ▼
+① Continuous Integration (GitHub-hosted runner)
+      ├── flake8 linting (syntax + style checks)
+      └── pytest (15 unit tests)
+      │
+      ▼
+② Build & Push (GitHub-hosted runner)
+      ├── Docker build
+      └── Push to AWS ECR
+      │
+      ▼
+③ Deploy (Self-hosted runner on EC2)
+      ├── Pull latest image from ECR
+      ├── Stop old container
+      ├── Start new container
+      └── Cleanup old images
+```
+
+---
+
+## 🚀 How to Run Locally
+
+### Prerequisites
+- Python 3.10
+- Conda or virtualenv
+- Free API keys (Pinecone, Groq, HuggingFace)
+
+### Step 1 — Clone the repo
+```bash
+git clone https://github.com/slaiba123/TakeoffPK.git
+cd TakeoffPK
+```
+
+### Step 2 — Create environment
+```bash
+conda create -n TakeoffPK python=3.10 -y
+conda activate TakeoffPK
+pip install -r requirements.txt
+```
+
+### Step 3 — Configure environment variables
+```bash
+cp .env.example .env
+# Edit .env with your actual API keys
+```
+
+```ini
+PINECONE_API_KEY=your_pinecone_key
+GROQ_API_KEY=your_groq_key
+HUGGINGFACE_API_KEY=your_huggingface_token
+```
+
+Free API keys:
+- **Pinecone**: https://pinecone.io
+- **Groq**: https://groq.com
+- **HuggingFace**: https://huggingface.co → Settings → Access Tokens
+
+### Step 4 — Add official PDFs
+Download PDFs from official embassy/government sources and place them in the correct `Data/` subfolder. See PDF Sources section below.
+
+### Step 5 — Index documents
+```bash
+python store_index.py
+```
+
+### Step 6 — Run the app
+```bash
+python app.py
+```
+Open: http://localhost:8080
+
+### Step 7 — Run tests
+```bash
+# Unit tests
+pytest tests/ -v
+
+# Accuracy evaluation (requires app running)
+python batch_test.py
+```
+
+---
+
+## ☁️ AWS Deployment (Free Tier)
+
+### Infrastructure
+- **EC2**: t3.micro (1GB RAM, free tier eligible)
+- **ECR**: Docker image registry (500MB free)
+- **EBS**: 16GB storage
+- **Estimated cost**: $0/month (within free tier limits)
+
+### Deployment Steps
+
+**1. Create IAM User**
+```
+AWS Console → IAM → Users → Create User
+Attach: AmazonEC2FullAccess + AmazonEC2ContainerRegistryFullAccess
+Generate Access Keys → save securely
+```
+
+**2. Create ECR Repository**
+```
+AWS Console → ECR → Create Repository → name: takeoffpk
+```
+
+**3. Launch EC2 Instance**
+```
+AMI: Ubuntu 22.04 LTS
+Type: t3.micro
+Security Group: open ports 22 (SSH) and 8080 (HTTP)
+```
+
+**4. Install Docker on EC2**
+```bash
+sudo apt-get update -y && sudo apt-get upgrade -y
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker ubuntu
+newgrp docker
+```
+
+**5. Configure Self-Hosted Runner**
+```
+GitHub repo → Settings → Actions → Runners → New self-hosted runner → Linux
+Follow the commands shown on your EC2 instance
+sudo ./svc.sh install && sudo ./svc.sh start
+```
+
+**6. Add GitHub Secrets**
+```
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_REGION                = ap-south-1
+AWS_ECR_LOGIN_URI         = <account_id>.dkr.ecr.ap-south-1.amazonaws.com
+ECR_REPOSITORY_NAME       = takeoffpk
+PINECONE_API_KEY
+GROQ_API_KEY
+HUGGINGFACE_API_KEY
+```
+
+**7. Deploy**
+```bash
+git push origin main
+# GitHub Actions handles everything automatically
 ```
 
 ---
 
 ## 📄 PDF Sources
 
-| Country | Official Source |
-|---------|----------------|
+All data sourced from official government and embassy websites:
+
+| Country | Source |
+|---------|--------|
 | 🇺🇸 USA | travel.state.gov, pk.usembassy.gov |
 | 🇬🇧 UK | assets.publishing.service.gov.uk |
 | 🇨🇦 Canada | ircc.canada.ca |
@@ -67,128 +286,17 @@ visabot/
 
 ---
 
-## 🚀 How to Run Locally
+## ⚠️ Disclaimer
 
-### Step 1 — Clone the repo
-```bash
-git clone <your-repo-url>
-cd visabot
-```
-
-### Step 2 — Create conda environment
-```bash
-conda create -n TakeoffPK python=3.10 -y
-conda activate TakeoffPK
-```
-
-### Step 3 — Install requirements
-```bash
-pip install -r requirements.txt
-```
-
-### Step 4 — Create `.env` file
-```ini
-PINECONE_API_KEY=your_pinecone_key
-GROQ_API_KEY=your_groq_key
-HUGGINGFACE_API_KEY=your_huggingface_token
-```
-
-Get free keys from:
-- Pinecone   : https://pinecone.io       (free, no credit card)
-- Groq       : https://groq.com          (free, no credit card)
-- HuggingFace: https://huggingface.co → Settings → Access Tokens (free)
-
-### Step 5 — Add PDFs to country folders
-Download official PDFs and place them in the correct `Data/` subfolder.
-
-### Step 6 — Store embeddings in Pinecone (run once only)
-```bash
-python store_index.py
-```
-
-### Step 7 — Run the app
-```bash
-python app.py
-```
-Open: http://localhost:8080
+This tool is for **informational purposes only**. Visa rules change frequently. Always verify information with the official embassy or consulate before making any application decisions. This project is not affiliated with any government body or embassy.
 
 ---
 
-## ☁️ AWS Deployment (Free Tier — t2.micro)
+## 👨‍💻 Author
 
-### Prerequisites
-- AWS account (free tier)
-- GitHub account
-- Docker installed locally
-
-### Step 1 — Create IAM user
-Attach these policies:
-- `AmazonEC2ContainerRegistryFullAccess`
-- `AmazonEC2FullAccess`
-
-Save `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
-
-### Step 2 — Create ECR repository
-```
-AWS Console → ECR → Create Repository → name: TakeoffPK
-Save URI: <account_id>.dkr.ecr.us-east-1.amazonaws.com/TakeoffPK
-```
-
-### Step 3 — Launch EC2 instance
-- Type: **t2.micro** (free tier eligible)
-- OS: Ubuntu 22.04
-- Open inbound port **8080** in Security Group
-
-### Step 4 — Install Docker on EC2
-```bash
-sudo apt-get update -y
-sudo apt-get upgrade -y
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-sudo usermod -aG docker ubuntu
-newgrp docker
-```
-
-### Step 5 — Configure EC2 as GitHub self-hosted runner
-```
-GitHub repo → Settings → Actions → Runners → New self-hosted runner → Linux
-Run the commands shown one by one on your EC2 instance
-```
-
-### Step 6 — Add GitHub Secrets
-```
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-AWS_REGION                 = us-east-1
-AWS_ECR_LOGIN_URI          = <account_id>.dkr.ecr.us-east-1.amazonaws.com
-ECR_REPOSITORY_NAME        = TakeoffPK
-PINECONE_API_KEY
-GROQ_API_KEY
-HUGGINGFACE_API_KEY
-```
-
-### Step 7 — Push to GitHub
-```bash
-git add .
-git commit -m "initial commit"
-git push origin main
-```
-GitHub Actions will automatically:
-1. Build Docker image
-2. Push to ECR
-3. Pull on EC2
-4. Run the container
-
-App live at: `http://<EC2-public-ip>:8080`
+**Laiba Mushtaq** — Computer Engineering Student  
+GitHub: [@slaiba123](https://github.com/slaiba123)
 
 ---
 
-## ⚠️ Important
-```
-# Add to .gitignore — never commit these!
-.env
-Data/
-```
-
-Data/ folder should never be pushed to GitHub as it contains PDFs.
-Always verify visa information with official embassies before applying.
+*Built with the goal of making study abroad accessible for every Pakistani student, regardless of their access to expensive consultants.*
