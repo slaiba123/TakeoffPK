@@ -28,7 +28,7 @@ This project uses RAG architecture to ground AI responses in official government
 ---
 
 ## Architecture
-
+```
 %%{init: {'theme': 'dark', 'flowchart': {'defaultRenderer': 'elk', 'curve': 'basis'}}}%%
 flowchart LR
 
@@ -81,7 +81,7 @@ flowchart LR
   class INGEST,EMBED,SEARCH,GENERATE,RESPOND pipeline
   class TEST,BUILD,REGISTRY,DEPLOY cicd
   class USER user
----
+```
 
 ## Tech Stack
 
