@@ -1,0 +1,12 @@
+Data/
+*.pem
+.env
+__pycache__/
+*.pyc
+tests/
+*.ipynb
+research/
+*.csv
+*.txt.bak
+.git/
+.github/
