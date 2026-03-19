@@ -1,4 +1,4 @@
-# TakeoffPK 🛫 — AI-Powered Student Visa Guide for Pakistanis
+# TakeoffPK — AI-Powered Student Visa Guide for Pakistanis
 
 > Helping Pakistani students navigate the complex world of international student visas using Retrieval-Augmented Generation (RAG) and Large Language Models.
 
@@ -6,7 +6,7 @@
 
 ---
 
-## 📌 Overview
+##Overview
 
 TakeoffPK is an end-to-end AI chatbot built to solve a real problem — thousands of Pakistani students every year struggle to find accurate, up-to-date visa information for studying abroad. Most rely on outdated blogs or expensive consultants.
 
@@ -14,7 +14,7 @@ This project uses RAG architecture to ground AI responses in official government
 
 ---
 
-## 🌍 Countries Covered
+## Countries Covered
 
 | Country | Visa Types Covered |
 |---------|-------------------|
@@ -27,7 +27,7 @@ This project uses RAG architecture to ground AI responses in official government
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 User Query
@@ -47,7 +47,7 @@ Grounded Response with Disclaimer
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -65,7 +65,7 @@ Grounded Response with Disclaimer
 
 ---
 
-## 📊 Evaluation Results
+## Evaluation Results
 
 A custom batch test was built to evaluate accuracy across all countries:
 
@@ -82,7 +82,7 @@ A custom batch test was built to evaluate accuracy across all countries:
 
 ---
 
-## 📁 Project Structure
+##Project Structure
 
 ```
 TakeoffPK/
@@ -117,7 +117,7 @@ TakeoffPK/
 
 ---
 
-## 🔄 CI/CD Pipeline
+##CI/CD Pipeline
 
 Every push to `main` automatically triggers:
 
@@ -144,7 +144,7 @@ Push to GitHub
 
 ---
 
-## 🚀 How to Run Locally
+##How to Run Locally
 
 ### Prerequisites
 - Python 3.10
@@ -206,7 +206,7 @@ python batch_test.py
 
 ---
 
-## ☁️ AWS Deployment (Free Tier)
+## AWS Deployment (Free Tier)
 
 ### Infrastructure
 - **EC2**: t3.micro (1GB RAM, free tier eligible)
@@ -271,7 +271,7 @@ git push origin main
 
 ---
 
-## 📄 PDF Sources
+## PDF Sources
 
 All data sourced from official government and embassy websites:
 
@@ -292,11 +292,9 @@ This tool is for **informational purposes only**. Visa rules change frequently. 
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Laiba Mushtaq** — Computer Engineering Student  
 GitHub: [@slaiba123](https://github.com/slaiba123)
 
 ---
-
-*Built with the goal of making study abroad accessible for every Pakistani student, regardless of their access to expensive consultants.*
