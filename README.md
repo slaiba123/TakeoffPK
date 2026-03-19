@@ -29,20 +29,59 @@ This project uses RAG architecture to ground AI responses in official government
 
 ## Architecture
 
-```
-User Query
-    │
-    ▼
-Flask Web App (Python)
-    │
-    ▼
-LangChain RAG Pipeline
-    ├── HuggingFace Inference API  ← Query Embedding (free, no local model)
-    ├── Pinecone Vector DB         ← Semantic Search over 21 official PDFs
-    └── Groq LLM (llama-3.3-70b)  ← Answer Generation (free)
-    │
-    ▼
-Grounded Response with Disclaimer
+```mermaid
+%%{init: {'theme': 'dark', 'flowchart': {'defaultRenderer': 'elk', 'curve': 'basis'}}}%%
+flowchart LR
+
+  subgraph SOURCES["📂 Knowledge Base — 21 Official PDFs"]
+    direction TB
+    USA["🇺🇸 **USA**\nF-1 Visa · SEVIS · Embassy"]
+    UK["🇬🇧 **UK**\nStudent Visa · CAS · UKVI"]
+    CA["🇨🇦 **Canada**\nStudy Permit · PAL · IRCC"]
+    DE["🇩🇪 **Germany**\nStudent Visa · DAAD · PhD"]
+    AU["🇦🇺 **Australia**\nSubclass 500 · OSHC · GTE"]
+    TR["🇹🇷 **Turkey**\nTürkiye Burslari · Student Visa"]
+  end
+
+  subgraph PIPELINE["⚙️ RAG Pipeline"]
+    direction LR
+    INGEST["📥 **Document Ingestion**\nLoad PDFs · Split into chunks"]
+    EMBED["🤗 **Embedding**\nConvert text → 384d vectors\nvia HuggingFace Inference API"]
+    SEARCH["🌲 **Semantic Search**\nFind top-5 relevant chunks\nvia Pinecone Vector DB"]
+    GENERATE["⚡ **Answer Generation**\nGrounds answer in context\nvia Groq LLaMA 3.3 70b"]
+    RESPOND["🐍 **Response Delivery**\nAdds disclaimer · Returns\nformatted answer to user"]
+
+    INGEST --> EMBED
+    EMBED --> SEARCH
+    SEARCH --> GENERATE
+    GENERATE --> RESPOND
+  end
+
+  subgraph CICD["🔄 CI/CD — Automated on every push"]
+    direction LR
+    TEST["✅ **Quality Check**\nLinting · 15 unit tests\n29-question accuracy eval"]
+    BUILD["🐳 **Containerise**\nDocker image built\n4.4 GB → 300 MB optimised"]
+    REGISTRY["📦 **Image Registry**\nPushed to AWS ECR\nVersioned and stored"]
+    DEPLOY["☁️ **Deploy**\nAWS EC2 t3.micro\nFree tier · port 8080"]
+
+    TEST --> BUILD --> REGISTRY --> DEPLOY
+  end
+
+  USER(["👤 Pakistani Student\nAsks visa question"])
+
+  USA & UK & CA & DE & AU & TR --> INGEST
+  RESPOND --> USER
+  DEPLOY -.->|"hosts"| RESPOND
+
+  classDef source fill:#1a2a1a,stroke:#2d5a2d,color:#7fc97f
+  classDef pipeline fill:#1a1a2e,stroke:#3d3d7a,color:#9090d4
+  classDef cicd fill:#2a1a1a,stroke:#6a3030,color:#d49090
+  classDef user fill:#1a2a2a,stroke:#2d6a6a,color:#90d4d4
+
+  class USA,UK,CA,DE,AU,TR source
+  class INGEST,EMBED,SEARCH,GENERATE,RESPOND pipeline
+  class TEST,BUILD,REGISTRY,DEPLOY cicd
+  class USER user
 ```
 
 ---
