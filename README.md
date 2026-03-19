@@ -29,27 +29,26 @@ This project uses RAG architecture to ground AI responses in official government
 
 ## Architecture
 
-```mermaid
 %%{init: {'theme': 'dark', 'flowchart': {'defaultRenderer': 'elk', 'curve': 'basis'}}}%%
 flowchart LR
 
   subgraph SOURCES["📂 Knowledge Base — 21 Official PDFs"]
     direction TB
-    USA["🇺🇸 **USA**\nF-1 Visa · SEVIS · Embassy"]
-    UK["🇬🇧 **UK**\nStudent Visa · CAS · UKVI"]
-    CA["🇨🇦 **Canada**\nStudy Permit · PAL · IRCC"]
-    DE["🇩🇪 **Germany**\nStudent Visa · DAAD · PhD"]
-    AU["🇦🇺 **Australia**\nSubclass 500 · OSHC · GTE"]
-    TR["🇹🇷 **Turkey**\nTürkiye Burslari · Student Visa"]
+    USA["🇺🇸 <b>USA</b><br/>F-1 Visa · SEVIS · Embassy"]
+    UK["🇬🇧 <b>UK</b><br/>Student Visa · CAS · UKVI"]
+    CA["🇨🇦 <b>Canada</b><br/>Study Permit · PAL · IRCC"]
+    DE["🇩🇪 <b>Germany</b><br/>Student Visa · DAAD · PhD"]
+    AU["🇦🇺 <b>Australia</b><br/>Subclass 500 · OSHC · GTE"]
+    TR["🇹🇷 <b>Turkey</b><br/>Türkiye Burslari · Student Visa"]
   end
 
   subgraph PIPELINE["⚙️ RAG Pipeline"]
     direction LR
-    INGEST["📥 **Document Ingestion**\nLoad PDFs · Split into chunks"]
-    EMBED["🤗 **Embedding**\nConvert text → 384d vectors\nvia HuggingFace Inference API"]
-    SEARCH["🌲 **Semantic Search**\nFind top-5 relevant chunks\nvia Pinecone Vector DB"]
-    GENERATE["⚡ **Answer Generation**\nGrounds answer in context\nvia Groq LLaMA 3.3 70b"]
-    RESPOND["🐍 **Response Delivery**\nAdds disclaimer · Returns\nformatted answer to user"]
+    INGEST["📥 <b>Document Ingestion</b><br/>Load PDFs · Split into chunks"]
+    EMBED["🤗 <b>Embedding</b><br/>Convert text → 384d vectors<br/>via HuggingFace Inference API"]
+    SEARCH["🌲 <b>Semantic Search</b><br/>Find top-5 relevant chunks<br/>via Pinecone Vector DB"]
+    GENERATE["⚡ <b>Answer Generation</b><br/>Grounds answer in context<br/>via Groq LLaMA 3.3 70b"]
+    RESPOND["🐍 <b>Response Delivery</b><br/>Adds disclaimer · Returns<br/>formatted answer to user"]
 
     INGEST --> EMBED
     EMBED --> SEARCH
@@ -59,19 +58,19 @@ flowchart LR
 
   subgraph CICD["🔄 CI/CD — Automated on every push"]
     direction LR
-    TEST["✅ **Quality Check**\nLinting · 15 unit tests\n29-question accuracy eval"]
-    BUILD["🐳 **Containerise**\nDocker image built\n4.4 GB → 300 MB optimised"]
-    REGISTRY["📦 **Image Registry**\nPushed to AWS ECR\nVersioned and stored"]
-    DEPLOY["☁️ **Deploy**\nAWS EC2 t3.micro\nFree tier · port 8080"]
+    TEST["✅ <b>Quality Check</b><br/>Linting · 15 unit tests<br/>29-question accuracy eval"]
+    BUILD["🐳 <b>Containerise</b><br/>Docker image built<br/>4.4 GB → 300 MB optimised"]
+    REGISTRY["📦 <b>Image Registry</b><br/>Pushed to AWS ECR<br/>Versioned and stored"]
+    DEPLOY["☁️ <b>Deploy</b><br/>AWS EC2 t3.micro<br/>Free tier · port 8080"]
 
     TEST --> BUILD --> REGISTRY --> DEPLOY
   end
 
-  USER(["👤 Pakistani Student\nAsks visa question"])
+  USER(["👤 <b>Pakistani Student</b><br/>Asks visa question"])
 
   USA & UK & CA & DE & AU & TR --> INGEST
   RESPOND --> USER
-  DEPLOY -.->|"hosts"| RESPOND
+  DEPLOY -.->|hosts| RESPOND
 
   classDef source fill:#1a2a1a,stroke:#2d5a2d,color:#7fc97f
   classDef pipeline fill:#1a1a2e,stroke:#3d3d7a,color:#9090d4
@@ -82,8 +81,6 @@ flowchart LR
   class INGEST,EMBED,SEARCH,GENERATE,RESPOND pipeline
   class TEST,BUILD,REGISTRY,DEPLOY cicd
   class USER user
-```
-
 ---
 
 ## Tech Stack
