@@ -109,7 +109,7 @@ A custom batch test was built to evaluate accuracy across all countries:
 
 ---
 
-##Project Structure
+## Project Structure
 
 ```
 TakeoffPK/
@@ -144,7 +144,7 @@ TakeoffPK/
 
 ---
 
-##CI/CD Pipeline
+## CI/CD Pipeline
 
 Every push to `main` automatically triggers:
 
@@ -171,7 +171,7 @@ Push to GitHub
 
 ---
 
-##How to Run Locally
+## How to Run Locally
 
 ### Prerequisites
 - Python 3.10
